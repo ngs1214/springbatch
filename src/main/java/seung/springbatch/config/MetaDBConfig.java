@@ -13,8 +13,10 @@ import javax.sql.DataSource;
 @Configuration
 public class MetaDBConfig {
 
+    //DataSource가 두개여서 충돌나서 primary 처리
     @Primary
     @Bean
+    //application.properties 값 가져오기
     @ConfigurationProperties(prefix = "spring.datasource-meta")
     public DataSource metaDataSource() {
         return DataSourceBuilder.create().build();

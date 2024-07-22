@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -28,11 +29,13 @@ public class DataDBConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean dataEntityManager(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+
         em.setDataSource(dataDbSource());
         em.setPackagesToScan(new String[] {"seung.springbatch.entity"});
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         //일반적으로 Spring Boot는 spring-boot-starter-data-jpa 종속성을 통해 기본 PersistenceProvider를 자동으로 설정하지만,
         // 특정 상황에서는 명시적으로 설정해야 할 때도 있습니다.
-        em.setPersistenceProviderClass(org.hibernate.jpa.HibernatePersistenceProvider.class); // 추가된 부분
+//        em.setPersistenceProviderClass(org.hibernate.jpa.HibernatePersistenceProvider.class); // 추가된 부분
 
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto","update");
