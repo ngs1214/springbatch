@@ -40,4 +40,16 @@ public class MainController {
 
 
     }
+    @GetMapping("/fourth")
+    public String fourthApi(@RequestParam String value) throws  Exception {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("date", value)
+                .toJobParameters();
+
+        jobLauncher.run(jobRegistry.getJob("fourthJob"), jobParameters);
+
+        return "ok";
+
+
+    }
 }
